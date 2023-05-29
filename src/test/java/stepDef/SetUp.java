@@ -1,13 +1,12 @@
 package stepDef;
 
-import io.cucumber.java.After;
-import io.cucumber.java.AfterStep;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
+import io.cucumber.java.*;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 public class SetUp {
@@ -50,6 +49,15 @@ public class SetUp {
     public void scrollToBottom(){
         JavascriptExecutor js = (JavascriptExecutor)driver;
         js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+    }
+
+    public void captureScreenshot() {
+        File file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(file,new File("screenshots"+File.separator+"screenshot.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
